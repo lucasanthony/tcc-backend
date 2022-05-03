@@ -5,19 +5,20 @@ const bcrypt = require('bcrypt');
 module.exports = {
     async save(ejData) {
         const { name } = ejData;
-        const { presidentData } = ejData.presidentData;
+        const { presidentData } = ejData;
+        
+        const ej = await Ej.create({
+            name: name
+        })
 
-        const psw = await bcrypt.hash(presidentData.password, process.env.SALT_ROUNDS)
-        const president = await User.create({
+        const psw = await bcrypt.hash(presidentData.password, parseInt(process.env.SALT_ROUNDS))
+        await User.create({
             name: presidentData.name,
             email: presidentData.email,
             birthDate: presidentData.birthDate,
-            password: psw
-        })
-
-        const ej = await Ej.create({
-            name: name,
-            president: president._id
+            password: psw,
+            role: 'presidente',
+            ej: ej._id
         })
 
         return ej;
@@ -25,6 +26,7 @@ module.exports = {
 
     // only for test purposes
     async findAll() {
+        // const ejs = await Ej.find().populate({ path: 'president', select: 'name -_id' });
         const ejs = await Ej.find();
 
         return ejs;

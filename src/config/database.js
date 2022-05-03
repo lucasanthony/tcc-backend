@@ -13,7 +13,7 @@ module.exports = async () => {
         BD_URL = uri;
     }
 
-    mongoose.set('useFindAndModify', false);
+    // mongoose.set('useFindAndModify', false);
     mongoose.connection.on('connected', () => {
         console.log('Conectado com o banco de dados!');
     })
@@ -24,8 +24,8 @@ module.exports = async () => {
 
     mongoose.connect(BD_URL, {
         useNewUrlParser: true,
-        poolSize: 5,
+        // poolSize: 5,
         useUnifiedTopology: true,
-        useCreateIndex: true,
+        // useCreateIndex: true,
     });
 }

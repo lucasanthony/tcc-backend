@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const databaseConfig = require('./config/database');
+require('module-alias/register');
 require('dotenv/config');
 
 const EjRoutes = require('./modules/Ej/EjRoutes');
