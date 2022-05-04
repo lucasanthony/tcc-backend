@@ -34,6 +34,7 @@
   },
   "_moduleAliases": {
     "@": "src",
+    "@middlewares": "src/middlewares",
     "@user": "src/modules/User",
     "@ej": "src/modules/Ej",
     "@project": "src/modules/Project",

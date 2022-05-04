@@ -1,17 +1,16 @@
 const jwt = require('jsonwebtoken');
 const User = require('@user/User');
+const { findPresident } = require('@ej/EjService');
 
 module.exports = {
     authorizeUser(req, res, next) {
         authorize(req, res, next, "user");
     },
 
-    authorizeDireX(req, res, next) {
-        authorize(req, res, next, "direx");
+    authorizePresident(req, res, next) {
+        authorize(req, res, next, "president");
     }
 }
-
-const direx = process.env.direx;
 
 const authorize = (req, res, next, type) => {
     const authHeader = req.headers.authorization;
@@ -38,16 +37,18 @@ const authorize = (req, res, next, type) => {
         if (!user)
             return res.status(404).send({ error: 'Usuário não existe!' });
 
-        if (type == "direx" && !direx.includes(user.email))
+        const president = await findPresident();
+
+        if (type === "president" && user._id !== president._id)
             return res.status(403).send({ error: 'Usuário não permitido por aqui!' });
 
-        const tokenList = user.token_list;
-        if (!tokenList.includes(token)) {
-            return res.status(401).send({ error: 'Token inválido' });
-        }
+        // const tokenList = user.token_list;
+        // if (!tokenList.includes(token)) {
+        //     return res.status(401).send({ error: 'Token inválido' });
+        // }
 
-        req.id = decoded.sub;
-        req.user = user;
+        req.ejId = user.ej;
+        req.userId = user._id;
         return next();
     })
 }

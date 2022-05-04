@@ -6,7 +6,7 @@ module.exports = {
     async save(ejData) {
         const { name } = ejData;
         const { presidentData } = ejData;
-        
+
         const ej = await Ej.create({
             name: name
         })
@@ -30,5 +30,10 @@ module.exports = {
         const ejs = await Ej.find();
 
         return ejs;
+    },
+
+    async findPresident(ejId) {
+        const president = await Ej.find({ _id: ejId, role: 'president' });
+        return president;
     }
 }

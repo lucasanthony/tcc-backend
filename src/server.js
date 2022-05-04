@@ -6,6 +6,7 @@ require('module-alias/register');
 require('dotenv/config');
 
 const EjRoutes = require('./modules/Ej/EjRoutes');
+const UserRoutes = require('./modules/User/UserRoutes');
 const server = express();
 
 server.use(cors());
@@ -17,7 +18,7 @@ server.get('/', async function (req, res) {
 databaseConfig();
 
 server.use(express.json());
-server.use(EjRoutes);
+server.use(EjRoutes, UserRoutes);
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 
