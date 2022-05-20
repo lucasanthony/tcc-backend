@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { save, findByEj, remove, update } = require('./EjController');
+const { save, findByEj, remove, update } = require('./UserController');
 const { authorizePresident, authorizeUser } = require('@middlewares/auth')
 
 router.post('/user', authorizePresident, save);
