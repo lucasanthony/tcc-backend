@@ -8,7 +8,7 @@ module.exports = {
     },
 
     authorizePresident(req, res, next) {
-        authorize(req, res, next, "president");
+        authorize(req, res, next, "presidente");
     }
 }
 
@@ -37,15 +37,10 @@ const authorize = (req, res, next, type) => {
         if (!user)
             return res.status(404).send({ error: 'Usuário não existe!' });
 
-        const president = await findPresident();
+        const president = await findPresident(user.ej);
 
-        if (type === "president" && user._id !== president._id)
+        if (type === "presidente" && `${user._id}` !== `${president._id}`)
             return res.status(403).send({ error: 'Usuário não permitido por aqui!' });
-
-        // const tokenList = user.token_list;
-        // if (!tokenList.includes(token)) {
-        //     return res.status(401).send({ error: 'Token inválido' });
-        // }
 
         req.ejId = user.ej;
         req.userId = user._id;

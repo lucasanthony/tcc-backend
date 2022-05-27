@@ -1,10 +1,10 @@
 const Project = require('@project/Project');
 
 module.exports = {
-    async save(projectData) {
-        const { name, description, tags, ejId, team, startDate, finishDate } = projectData;
+    async save(projectData, ejId) {
+        const { name, description, tags, team, startDate, finishDate } = projectData;
 
-        await Project.create({
+        const project = await Project.create({
             name: name,
             description: description,
             tags: tags,
@@ -20,7 +20,7 @@ module.exports = {
     // only for test purposes
     async findByEj(ejId) {
         // const ejs = await Ej.find().populate({ path: 'president', select: 'name -_id' });
-        const projects = await Project.find({ ej: ejId });
+        const projects = await Project.find({ ej: ejId }).populate({ path: 'team', select: 'name role -_id' });;
 
         return projects;
     },

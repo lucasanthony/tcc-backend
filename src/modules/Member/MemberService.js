@@ -2,10 +2,10 @@ const Ej = require('@ej/Ej');
 const Member = require('@member/Member');
 
 module.exports = {
-    async save(memberData) {
-        const { name, email, role, ejId, birthDate } = memberData;
+    async save(memberData, ejId) {
+        const { name, email, role, birthDate } = memberData;
 
-        await Member.create({
+        const member = await Member.create({
             name: name,
             email: email,
             role: role,
@@ -13,7 +13,7 @@ module.exports = {
             ej: ejId
         })
 
-        return ej;
+        return member;
     },
 
     // only for test purposes

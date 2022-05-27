@@ -3,7 +3,7 @@ const { save, findByEj, remove, update } = require('./MemberService');
 module.exports = {
     async save(req, res) {
         try {
-            const member = await save(req.body);
+            const member = await save(req.body, req.ejId);
             return res.status(201).send({ member: member });
         } catch (error) {
             return res.status(500).send({ error: error.message });

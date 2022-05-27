@@ -3,7 +3,7 @@ const { save, findByEj, remove, update } = require('./UserService');
 module.exports = {
     async save(req, res) {
         try {
-            const user = await save(req.body);
+            const user = await save(req.body, req.ejId);
             return res.status(201).send({ user: user });
         } catch (error) {
             return res.status(500).send({ error: error.message });
