@@ -13,7 +13,7 @@ module.exports = {
     async findByEj(req, res) {
         try {
             const members = await findByEj(req.ejId);
-            return res.status(201).send({ members: members });
+            return res.status(200).send({ members: members });
         } catch (error) {
             return res.status(500).send({ error: error.message });
         }
