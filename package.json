@@ -39,6 +39,7 @@
     "@user": "src/modules/User",
     "@ej": "src/modules/Ej",
     "@project": "src/modules/Project",
+    "@link": "src/modules/Link",
     "@member": "src/modules/Member",
     "@config": "src/config"
   }

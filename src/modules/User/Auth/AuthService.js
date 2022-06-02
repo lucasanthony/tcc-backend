@@ -16,12 +16,12 @@ module.exports = {
         const user = await User.findOne({ email: email });
 
         if (!user)
-            return
+            return { erro: 'Usuário ou senha incorreta' }
 
         const match = await bcrypt.compare(password, user.password);
 
         if (!match)
-            return
+            return { erro: 'Usuário ou senha incorreta' }
 
         const token = signToken(user);
 

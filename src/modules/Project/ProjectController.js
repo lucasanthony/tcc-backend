@@ -4,7 +4,7 @@ module.exports = {
     async save(req, res) {
         try {
             const project = await save(req.body, req.ejId);
-            return res.status(201).send({ member: project });
+            return res.status(201).send({ project: project });
         } catch (error) {
             return res.status(500).send({ error: error.message });
         }
