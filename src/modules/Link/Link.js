@@ -20,11 +20,15 @@ const LinkSchema = new Schema({
         ref: Ej,
         required: true
     },
-    diretorias: [{
+    departments: [{
         type: String,
         enum: ['projetos', 'qualidade', 'presedência', 'pessoas'],
         required: false
-    }]
+    }],
+    observations: {
+        type: String,
+        required: false
+    }
 },
     {
         timestamps: true,

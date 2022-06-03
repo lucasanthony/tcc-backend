@@ -24,6 +24,26 @@ const MemberSchema = new Schema({
     birthDate: {
         type: Date,
         required: false
+    },
+    entryDate: {
+        type: Date,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: false
+    },
+    observations: {
+        type: String,
+        required: false
+    },
+    habilities: [{
+        type: String,
+        required: false
+    }],
+    department: {
+        type: String,
+        required: false
     }
 },
     {

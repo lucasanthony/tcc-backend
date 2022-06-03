@@ -2,14 +2,15 @@ const Link = require('./Link');
 
 module.exports = {
     async save(linkData, ejId) {
-        const { name, url, tags, diretorias } = linkData;
+        const { name, url, tags, departments, observations } = linkData;
 
         const link = await Link.create({
-            name: name,
-            url: url,
-            tags: tags,
-            diretorias: diretorias,
-            ej: ejId
+            name,
+            url,
+            tags,
+            departments: departments,
+            ej: ejId,
+            observations
         })
 
         return link;
