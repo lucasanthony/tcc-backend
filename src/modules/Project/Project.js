@@ -44,11 +44,11 @@ const ProjectSchema = new Schema({
 			required: false
 		},
 		contact: {
-			type: Date,
+			type: String,
 			required: false
 		},
 		name: {
-			type: Date,
+			type: String,
 			required: false
 		}
 	},

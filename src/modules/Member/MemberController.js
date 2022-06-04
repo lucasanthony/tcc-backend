@@ -31,7 +31,7 @@ module.exports = {
     async update(req, res) {
         try {
             const updatedMember = await update(req.params.id, req.body);
-            return res.status(200).send({ user: updatedMember, message: 'Membro atualizado com sucesso!' });
+            return res.status(200).send({ member: updatedMember, message: 'Membro atualizado com sucesso!' });
         } catch (error) {
             return res.status(500).send({ error: error.message });
         }
