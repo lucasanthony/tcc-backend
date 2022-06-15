@@ -4,11 +4,11 @@ const { remove } = require('../Ej/Ej');
 
 module.exports = {
     async save(userData, ejId) {
-        const { name, email, role, birthDate } = userData
+        const { name, email, role, birthDate, password } = userData
 
         // password auto generated for first access with 6 digits, mockado por enquanto
         const code = 123456 || Math.floor(Math.random() * (999999 - 100000) + 100000);
-        const psw = await bcrypt.hash(`${code}`, parseInt(process.env.SALT_ROUNDS))
+        const psw = await bcrypt.hash(`${password || code}`, parseInt(process.env.SALT_ROUNDS))
 
         const user = await User.create({
             name: name,
@@ -19,7 +19,8 @@ module.exports = {
             ej: ejId
         })
 
-        return user;
+        userData.senhaGerada = password || code
+        return userData;
     },
 
     async findByEj(ejId) {
