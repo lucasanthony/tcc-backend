@@ -40,6 +40,10 @@ module.exports = {
     * @returns {Object} Retorna o usuário com os dados atualizados.
     */
     async update(userId, data) {
+        if (data.hasOwnProperty('password')) {
+            const psw = await bcrypt.hash(data.password, parseInt(process.env.SALT_ROUNDS))
+            data.password = psw
+        }
         const updatedUser = await User.findOneAndUpdate({ _id: userId }, data)
         return updatedUser
     }
