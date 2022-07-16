@@ -5,7 +5,7 @@ const JWT = require('jsonwebtoken');
 const signToken = user => {
     return JWT.sign({
         iss: 'TCC',
-        sub: user._id,
+        sub: user,
         iat: new Date().getTime(),
     }, process.env.JWT_SECRET);
 }
@@ -13,7 +13,7 @@ const signToken = user => {
 module.exports = {
     async signIn(dados) {
         const { email, password } = dados;
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email }).populate({ path: 'ej', select: 'name' });
 
         if (!user)
             return { erro: 'Usuário ou senha incorreta' }
@@ -22,10 +22,11 @@ module.exports = {
 
         if (!match)
             return { erro: 'Usuário ou senha incorreta' }
+        
+        delete user._doc.password
 
         const token = signToken(user);
 
-        user.password = undefined;
 
         // return res.status(200).cookie("jwt", token, {sameSite: 'none', path: '/', httpOnly: false , secure: false  }).send({
         return {
