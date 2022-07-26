@@ -15,7 +15,7 @@ const server = express();
 
 server.use(cors());
 
-server.get('/', async function (req, res) {
+server.get('/', function (req, res) {
     return res.json({ message: "API conectada" });
 })
 

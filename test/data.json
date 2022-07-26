@@ -1,0 +1,37 @@
+{
+    "ejDefault": {
+        "name": "CodeX Jr.",
+        "presidentData": {
+            "name": "Pamplona",
+            "email": "fulano@codexjr.com.br",
+            "password": "senha",
+            "birthDate": "24-07-1998"
+        }
+    },
+    "presidentDefault": {
+        "_id": "62dfd9b329f42950568f34ae",
+        "name": "Pamplona",
+        "email": "fulano@codexjr.com.br",
+        "password": "$2b$10$N3Fbht3j7ItAPAkRlsPf7eXYVzzs40Z0l520RC4NIcC4JL6wdhIB.",
+        "role": "presidente",
+        "ej": "62dfd9b329f42950568f34ab",
+        "createdAt": "2022-07-26T12:10:27.808Z",
+        "updatedAt": "2022-07-26T12:10:27.808Z",
+        "__v": 0
+    },
+    "userDefault": {
+        "name": "CodeX Jr.",
+        "email": "lucas@codexjr.com.br",
+        "role": "diretor",
+        "birthDate": "24-07-1998"
+    },
+    "HTTP_CODE": {
+        "OK": 200,
+        "CREATED": 201,
+        "FORBIDDEN": 403,
+        "NOT_FOUND": 404,
+        "UNPROCESSABLE": 422,
+        "UNAUTHORIZED": 401,
+        "NOT_ACCEPTABLE": 406
+    }
+}

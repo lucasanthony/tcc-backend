@@ -20,6 +20,7 @@ module.exports = {
         })
 
         userData.senhaGerada = password || code
+        userData._id = user._id
         return userData;
     },
 

@@ -15,7 +15,9 @@ module.exports = async () => {
 
     // mongoose.set('useFindAndModify', false);
     mongoose.connection.on('connected', () => {
-        console.log('Conectado com o banco de dados!');
+        if (process.env.NODE_ENV !== "test") {
+            console.log('Conectado com o banco de dados!');
+        }
     })
 
     mongoose.connection.on('error', (err) => {
