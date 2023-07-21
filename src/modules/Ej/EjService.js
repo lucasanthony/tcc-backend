@@ -12,7 +12,7 @@ module.exports = {
         })
 
         const psw = await bcrypt.hash(presidentData.password, parseInt(process.env.SALT_ROUNDS))
-        await User.create({
+        const user = await User.create({
             name: presidentData.name,
             email: presidentData.email,
             birthDate: presidentData.birthDate,
@@ -21,7 +21,8 @@ module.exports = {
             ej: ej._id
         })
 
-        return ej;
+        user.password = undefined
+        return { ej: ej, user: user }
     },
 
     // only for test purposes
@@ -35,5 +36,10 @@ module.exports = {
     async findPresident(ejId) {
         const president = await User.findOne({ role: 'presidente', ej: ejId });
         return president;
+    },
+
+    async findById(ejId) {
+        const ej = await Ej.findOne({ _id: ejId });
+        return ej
     }
 }
