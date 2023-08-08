@@ -7,6 +7,10 @@ module.exports = {
         const { name } = ejData;
         const { presidentData } = ejData;
 
+        if (this.emailAlreadyExists(presidentData.email)) {
+            return res.status(500).send({ error: 'Já existe uma EJ cadastrada para esse email!' });
+        }
+
         const ej = await Ej.create({
             name: name
         })
@@ -40,6 +44,11 @@ module.exports = {
 
     async findById(ejId) {
         const ej = await Ej.findOne({ _id: ejId });
-        return ej
-    }
+        return ej;
+    },
+
+    async emailAlreadyExists(userEmail) {
+        const user = await User.findOne({ email: userEmail });
+        return user != null;
+    },
 }
