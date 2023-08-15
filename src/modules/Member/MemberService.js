@@ -3,12 +3,13 @@ const Member = require('@member/Member');
 
 module.exports = {
 	async save(memberData, ejId) {
-		const { name, email, role, birthDate, entryDate, phone, observations, habilities, department } = memberData;
+		const { name, email, role, password, birthDate, entryDate, phone, observations, habilities, department } = memberData;
 
 		const member = await Member.create({
 			name,
 			email,
 			role,
+			password,
 			birthDate,
 			ej: ejId,
 			entryDate,
