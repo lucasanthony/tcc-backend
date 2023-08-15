@@ -5,18 +5,20 @@ module.exports = {
 	async save(memberData, ejId) {
 		const { name, email, role, password, birthDate, entryDate, phone, observations, habilities, department } = memberData;
 
+		const psw = await bcrypt.hash(`${password}`, parseInt(process.env.SALT_ROUNDS))
+
 		const member = await Member.create({
-			name,
-			email,
-			role,
-			password,
-			birthDate,
+			name: name,
+			email: email,
+			role: role,
+			password: psw,
+			birthDate: birthDate,
 			ej: ejId,
-			entryDate,
-			phone,
-			observations,
-			habilities,
-			department
+			entryDate: entryDate,
+			phone: phone,
+			observations: observations,
+			habilities: habilities,
+			department: department
 		})
 
 		return member;
