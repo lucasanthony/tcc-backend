@@ -7,12 +7,17 @@ module.exports = {
         const { name } = ejData;
         const { presidentData } = ejData;
 
+        const user = await User.findOne({ email: presidentData.email });
+        if (user) {
+            throw new Error('Já existe uma EJ cadastrada para esse email!');
+        }
+
         const ej = await Ej.create({
             name: name
         })
 
         const psw = await bcrypt.hash(presidentData.password, parseInt(process.env.SALT_ROUNDS))
-        const user = await User.create({
+        const newUser = await User.create({
             name: presidentData.name,
             email: presidentData.email,
             birthDate: presidentData.birthDate,
@@ -21,8 +26,8 @@ module.exports = {
             ej: ej._id
         })
 
-        user.password = undefined
-        return { ej: ej, user: user }
+        newUser.password = undefined
+        return { ej: ej, user: newUser }
     },
 
     // only for test purposes
@@ -40,6 +45,6 @@ module.exports = {
 
     async findById(ejId) {
         const ej = await Ej.findOne({ _id: ejId });
-        return ej
-    }
+        return ej;
+    },
 }
