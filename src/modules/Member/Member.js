@@ -31,7 +31,7 @@ const MemberSchema = new Schema({
     },
     entryDate: {
         type: Date,
-        required: true
+        required: false
     },
     phone: {
         type: String,
