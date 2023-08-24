@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const Ej = require('@ej/Ej');
 const Member = require('@member/Member');
 
