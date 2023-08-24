@@ -39,7 +39,7 @@ module.exports = {
     },
 
     async findPresident(ejId) {
-        const president = await User.findOne({ role: 'presidente', ej: ejId });
+        const president = await User.findOne({ role: 'Presidente', ej: ejId });
         return president;
     },
 
