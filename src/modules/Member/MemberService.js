@@ -39,6 +39,11 @@ module.exports = {
 	},
 
 	async update(memberId, data) {
+		if (data.hasOwnProperty('password')) {
+            const psw = await bcrypt.hash(data.password, parseInt(process.env.SALT_ROUNDS))
+            data.password = psw
+        }
+		
 		const updatedMember = await Member.findOneAndUpdate({ _id: memberId }, data)
 		return updatedMember
 	}
