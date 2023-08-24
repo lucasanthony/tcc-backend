@@ -1,5 +1,5 @@
 const Ej = require('@ej/Ej');
-const User = require('@user/User');
+const Member = require('@member/Member');
 const bcrypt = require('bcrypt');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         })
 
         const psw = await bcrypt.hash(presidentData.password, parseInt(process.env.SALT_ROUNDS))
-        const user = await User.create({
+        const member = await Member.create({
             name: presidentData.name,
             email: presidentData.email,
             birthDate: presidentData.birthDate,
@@ -21,8 +21,8 @@ module.exports = {
             ej: ej._id
         })
 
-        user.password = undefined
-        return { ej: ej, user: user }
+        member.password = undefined
+        return { ej: ej, member: member }
     },
 
     // only for test purposes
@@ -34,7 +34,7 @@ module.exports = {
     },
 
     async findPresident(ejId) {
-        const president = await User.findOne({ role: 'presidente', ej: ejId });
+        const president = await Member.findOne({ role: 'presidente', ej: ejId });
         return president;
     },
 
