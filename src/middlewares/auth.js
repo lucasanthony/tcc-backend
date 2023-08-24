@@ -39,7 +39,7 @@ const authorize = (req, res, next, type) => {
 
         const president = await findPresident(user.ej);
 
-        if (type === "presidente" && `${user._id}` !== `${president._id}`)
+        if (type === "Presidente" && `${user._id}` !== `${president._id}`)
             return res.status(403).send({ error: 'Usuário não permitido por aqui!' });
 
         req.ejId = user.ej;
