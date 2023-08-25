@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('@user/User');
+const Member = require('@member/Member');
 const { findPresident } = require('@ej/EjService');
 
 module.exports = {
@@ -32,18 +32,18 @@ const authorize = (req, res, next, type) => {
         if (err)
             return res.status(401).send({ error: 'Token inválido' });
 
-        const user = await User.findOne({ _id: decoded.sub });
+        const member = await Member.findOne({ _id: decoded.sub });
 
-        if (!user)
+        if (!member)
             return res.status(404).send({ error: 'Usuário não existe!' });
 
-        const president = await findPresident(user.ej);
+        const president = await findPresident(member.ej);
 
-        if (type === "presidente" && `${user._id}` !== `${president._id}`)
+        if (type === "presidente" && `${member._id}` !== `${president._id}`)
             return res.status(403).send({ error: 'Usuário não permitido por aqui!' });
 
-        req.ejId = user.ej;
-        req.userId = user._id;
+        req.ejId = member.ej;
+        req.memberId = member._id;
         return next();
     })
 }
