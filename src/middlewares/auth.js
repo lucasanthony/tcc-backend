@@ -7,8 +7,8 @@ module.exports = {
         authorize(req, res, next, "user");
     },
 
-    authorizePresident(req, res, next) {
-        authorize(req, res, next, "presidente");
+    authorizeLeadership(req, res, next) {
+        authorize(req, res, next, "Liderança");
     }
 }
 
@@ -39,7 +39,8 @@ const authorize = (req, res, next, type) => {
 
         const president = await findPresident(member.ej);
 
-        if (type === "presidente" && `${member._id}` !== `${president._id}`)
+        if (type === "Liderança" && (`${member._id}` !== `${president._id}`
+        && `${member.role}` !== "Diretor(a)"))
             return res.status(403).send({ error: 'Usuário não permitido por aqui!' });
 
         req.ejId = member.ej;
