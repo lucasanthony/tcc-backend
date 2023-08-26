@@ -44,12 +44,12 @@ const authorize = (req, res, next, type) => {
         break;
 
       case "user":
-        if (isLeadership(member) && member._id.toString() !== req.body._id)
+        if (!isLeadership(member) && member._id.toString() !== req.body._id)
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
 
       case "leadership":
-        if (isLeadership(member))
+        if (!isLeadership(member))
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
     }
@@ -61,4 +61,4 @@ const authorize = (req, res, next, type) => {
 };
 
 const isLeadership = (member) =>
-  !["Presidente", "Diretor(a)"].includes(`${member.role}`);
+  ["Presidente", "Diretor(a)"].includes(`${member.role}`);
