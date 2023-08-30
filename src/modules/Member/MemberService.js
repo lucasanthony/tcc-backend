@@ -53,7 +53,7 @@ module.exports = {
 
   async remove(memberId) {
     const member = await Member.deleteOne({ _id: memberId });
-    return member;
+    return getDTOmember(member);
   },
 
   async update(memberId, data) {
