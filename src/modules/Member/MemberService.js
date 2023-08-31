@@ -26,7 +26,7 @@ module.exports = {
       name,
       email,
       role,
-      password,
+      password: psw,
       birthDate,
       ej: ejId,
       entryDate,
