@@ -22,7 +22,7 @@ module.exports = {
 	// only for test purposes
 	async findByEj(ejId) {
 		// const ejs = await Ej.find().populate({ path: 'president', select: 'name -_id' });
-		const projects = await Project.find({ ej: ejId }).populate({ path: 'team', select: 'name role -_id' });;
+		const projects = await Project.find({ ej: ejId }).populate({ path: 'team', select: 'name role _id' });;
 
 		const projectsDTO = projects.map((project) => {
 			return getDTOproject(project);
