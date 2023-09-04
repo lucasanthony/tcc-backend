@@ -52,7 +52,14 @@ module.exports = {
   },
 
   async remove(memberId) {
-    const member = await Member.deleteOne({ _id: memberId });
+    const member = await Member.findOne({ _id: memberId });
+    const members = await Member.find({ ej: member.ej });
+
+    if (members.length <= 1)
+      throw new Error("A presença de ao menos um usuário na EJ é obrigatória.");
+
+    member.delete();
+
     return getDTOmember(member);
   },
 
