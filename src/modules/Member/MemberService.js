@@ -53,10 +53,8 @@ module.exports = {
 
   async remove(memberId) {
     const member = await Member.findOne({ _id: memberId });
-    const members = await Member.find({ ej: member.ej });
 
-    if (members.length <= 1)
-      throw new Error("A presença de ao menos um usuário na EJ é obrigatória.");
+    await checkMinimumQuantity(member);
 
     member.delete();
 
@@ -72,12 +70,17 @@ module.exports = {
       data.password = psw;
     }
 
-    const updatedMember = await Member.findOneAndUpdate(
-      { _id: memberId },
-      data
-    );
+    const member = await Member.findOne({ _id: memberId });
 
-    return getDTOmember(updatedMember);
+    if (
+      member.role !== data.role &&
+      !["Presidente", "Diretor(a)"].includes(data.role)
+    )
+      await checkMinimumQuantity(member);
+
+    await member.updateOne(data);
+
+    return getDTOmember(member);
   },
 };
 
@@ -95,4 +98,28 @@ function getDTOmember(member) {
     habilities: member.habilities,
     department: member.department,
   };
+}
+
+async function checkMinimumQuantity(memberToDelete) {
+  const members = await Member.find({ ej: memberToDelete.ej });
+
+  let hasALeadership = false;
+
+  members
+    .filter((member) => member._id.toString() !== memberToDelete._id.toString())
+    .forEach((member) => {
+      if (["Presidente", "Diretor(a)"].includes(member.role)) {
+        hasALeadership = true;
+        return;
+      }
+    });
+
+  if (!hasALeadership) {
+    throw new Error(
+      "A presença de ao menos um outro usuário com o cargo de Presidente ou Diretor(a) na EJ é obrigatória."
+    );
+  }
+
+  if (members.length <= 1)
+    throw new Error("A presença de ao menos um usuário na EJ é obrigatória.");
 }
