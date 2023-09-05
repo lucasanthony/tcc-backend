@@ -18,7 +18,7 @@ module.exports = {
     } = memberData;
 
     verifyEmail(memberData.email);
-    
+
     const psw = await bcrypt.hash(
       `${password}`,
       parseInt(process.env.SALT_ROUNDS)
@@ -76,12 +76,11 @@ module.exports = {
   },
 };
 
-function verifyEmail(email) {
-  const member = Member.findOne({ email: email });
+function verifyEmail(memberEmail) {
+  const member = Member.findOne({ email: memberEmail });
 
-  if (member) {
-    return { message: 'Já existe um membro cadastrado para esse email!' };
-  }
+  if (member) 
+    throw new Error('Já existe um usuário cadastrado para esse email!');
 };
 
 function getDTOmember(member) {
