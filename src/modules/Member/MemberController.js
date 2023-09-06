@@ -22,7 +22,7 @@ module.exports = {
     async remove(req, res) {
         try {
             const removedMember = await remove(req.params.id);
-            return res.status(200).send({ member: removedMember, message: 'Membero removido com sucesso!' });
+            return res.status(200).send({ member: removedMember, message: 'Membro removido com sucesso!' });
         } catch (error) {
             return res.status(500).send({ error: error.message });
         }
