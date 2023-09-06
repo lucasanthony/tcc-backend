@@ -40,11 +40,13 @@ module.exports = {
   },
 
   // only for test purposes
-  async findByEj(ejId) {
+  async findByEj(req) {
     // const ejs = await Ej.find().populate({ path: 'president', select: 'name -_id' });
-    const members = await Member.find({ ej: ejId });
+    const members = await Member.find({ ej: req.ejId });
 
     const membersDTO = members.map((member) => {
+      if (member._id.toString() === req.memberId.toString())
+        return { ...getDTOmember(member), ...{ loged: true } };
       return getDTOmember(member);
     });
 
