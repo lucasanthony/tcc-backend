@@ -17,10 +17,7 @@ module.exports = {
       department,
     } = memberData;
 
-    const emailInUse = await isEmailInUse(email);
-    if (emailInUse) {
-      throw new Error('Já existe um membro cadastrado para esse email!');
-    }
+    await verifyEmail(email);
 
     const psw = await bcrypt.hash(
       `${password}`,
@@ -69,19 +66,22 @@ module.exports = {
       );
       data.password = psw;
     }
+  
+    const member = await Member.findOne({ _id: memberId });
+    if (member.email !== data.email) {
+      await verifyEmail(data.email);
+    }
 
-    const updatedMember = await Member.findOneAndUpdate(
-      { _id: memberId },
-      data
-    );
-
+    const updatedMember = await member.updateOne(data);
     return getDTOmember(updatedMember);
   },
 };
 
-async function isEmailInUse(memberEmail) {
+async function verifyEmail(memberEmail) {
   const emailInUse = await Member.findOne({ email: memberEmail });
-  return emailInUse !== null;
+  if (emailInUse) {
+    throw new Error('Já existe um membro cadastrado para esse email!');
+  }
 }
 
 function getDTOmember(member) {
