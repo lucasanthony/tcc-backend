@@ -17,12 +17,14 @@ module.exports = {
       department,
     } = memberData;
 
+    await verifyEmail(email);
+
     const psw = await bcrypt.hash(
       `${password}`,
       parseInt(process.env.SALT_ROUNDS)
     );
 
-    const member = await Member.create({
+    const newMember = await Member.create({
       name,
       email,
       role,
@@ -36,7 +38,7 @@ module.exports = {
       department,
     });
 
-    return getDTOmember(member);
+    return getDTOmember(newMember);
   },
 
   // only for test purposes
@@ -71,8 +73,12 @@ module.exports = {
       );
       data.password = psw;
     }
-
+  
     const member = await Member.findOne({ _id: memberId });
+    
+    if (member.email !== data.email) {
+      await verifyEmail(data.email);
+    }
 
     if (
       member.role !== data.role &&
@@ -80,11 +86,17 @@ module.exports = {
     )
       await checkMinimumQuantity(member);
 
-    await member.updateOne(data);
-
-    return getDTOmember(member);
+    const updatedMember = await member.updateOne(data);
+    return getDTOmember(updatedMember);
   },
 };
+
+async function verifyEmail(memberEmail) {
+  const emailInUse = await Member.findOne({ email: memberEmail });
+  if (emailInUse) {
+    throw new Error('Já existe um membro cadastrado para esse email!');
+  }
+}
 
 function getDTOmember(member) {
   return {
