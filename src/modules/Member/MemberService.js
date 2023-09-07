@@ -17,7 +17,7 @@ module.exports = {
       department,
     } = memberData;
 
-    const emailInUse = await verifyEmail(email);
+    const emailInUse = await isEmailInUse(email);
     if (emailInUse) {
       throw new Error('Já existe um membro cadastrado para esse email!');
     }
@@ -79,9 +79,10 @@ module.exports = {
   },
 };
 
-async function verifyEmail(memberEmail) {
-  return await Member.findOne({ email: memberEmail });;
-};
+async function isEmailInUse(memberEmail) {
+  const emailInUse = await Member.findOne({ email: memberEmail });
+  return emailInUse !== null;
+}
 
 function getDTOmember(member) {
   return {
