@@ -14,7 +14,7 @@ const LinkSchema = new Schema(
     tags: [
       {
         type: String,
-        enum: ["importante", "treinamento"],
+        enum: ["Importante", "Treinamento", "Documentação"],
         required: false,
       },
     ],
