@@ -86,7 +86,8 @@ module.exports = {
     )
       await checkMinimumQuantity(member);
 
-    const updatedMember = await member.updateOne(data);
+    await member.updateOne(data);
+    const updatedMember = await Member.findOne({ _id: memberId });
     return getDTOmember(updatedMember);
   },
 };
