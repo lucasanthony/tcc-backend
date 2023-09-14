@@ -38,8 +38,8 @@ npm install
 Also in the project root, add a ".env" file and insert the following variables:
 
 ```.env
-BD_PROD=<developer database link (MongoDB Atlas).>
-BD_DEV=<production database link (MongoDB Atlas).>
+BD_PROD=<developer database link (MongoDB Atlas)>
+BD_DEV=<production database link (MongoDB Atlas)>
 
 PORT=<port on which you want to run the API. Ex: 4444>
 
@@ -131,12 +131,14 @@ Please, read a **[COLLAB.md](https://github.com/codexjr-dev/dashboard-codex-api/
    <tr>
       <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/25506401?v=4" alt="Lucas Anthony Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/lucasanthony">@lucasanthony</a>
          </br>
          <span>Initial Work</span>
       </td>
       <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/34282197?v=4" alt="Gabriel Max Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/ManoMax">@ManoMax</a>
          </br>
          <span>Continuation of Work</span>
@@ -153,24 +155,28 @@ You can also see the list of all contributors who participated in this project.
    <tr>
       <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/100716949?v=4" alt="Ana Rita Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/Anaritamed">@anaritamed</a>
          </br>
          <span>Developer</span>
       </td>
       <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/64997111?v=4" alt="Filipe Luiz Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/FLuiz22">@FLuiz22</a>
          </br>
          <span>Developer</span>
       </td>
       <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/117235880?v=4" alt="Maria Clara Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/maahog">@maahog</a>
          </br>
          <span>Developer</span>
       </td>
       <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/92826048?v=4" alt="Matheus Victor Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/matheusvictoor">@matheusvictoor</a>
          </br>
          <span>Developer</span>
@@ -179,12 +185,14 @@ You can also see the list of all contributors who participated in this project.
    <tr>
       <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/62821027?v=4" alt="Daniele Oliveira Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/danieleolivs">@danieleolivs</a>
          </br>
          <span>UI Design</span>
       </td>
          <td align="center" width="190px" height="160px">
          <img src="https://avatars.githubusercontent.com/u/96065590?v=4" alt="Carlos Lucena Profile Image" width="50"></img>
+         </br>
          <a href="https://github.com/carlos-lucenag">@carlos-lucenag</a>
          </br>
          <span>UI Design</span>
