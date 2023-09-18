@@ -3,7 +3,7 @@ const Project = require("@project/Project");
 
 const NewsSchema = new Schema({
     project: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: Project,
         required: true
     },

@@ -1,11 +1,10 @@
 const News = require("@news/News");
 
 module.exports = {
-    async save(newsData, projectId) {
+    async save(newsData) {
         const { description, images, updateLink } = newsData;
 
         const news = await News.create({
-            project: projectId,
             description,
             images,
             updateLink
@@ -22,7 +21,6 @@ module.exports = {
 function getDTOnews(news) {
     return {
         _id: news._id,
-        project: news.project,
         description: news.description,
         images: news.images,
         updateLink: news.updateLink
