@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Member = require("@member/Member");
+const Project = require("@project/Project");
 
 module.exports = {
   validatedUser(req, res, next) {
@@ -12,6 +13,10 @@ module.exports = {
 
   authorizedLeadership(req, res, next) {
     authorize(req, res, next, "leadership");
+  },
+
+  authorizedMemberOnProject(req, res, next){
+    authorize(req, res, next, "team");
   },
 
   authorizePresident(req, res, next) {
@@ -52,6 +57,12 @@ const authorize = (req, res, next, type) => {
         if (!isLeadership(member))
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
+
+      case "team":
+        const project = await Project.findOne({ _id: req.body.project});
+        if(!isMemberProject(project, member))
+          return res.status(403).send({ error: "Usuário sem permissão." });
+        break
     }
 
     req.ejId = member.ej;
@@ -62,3 +73,6 @@ const authorize = (req, res, next, type) => {
 
 const isLeadership = (member) =>
   member && ["Presidente", "Diretor(a)"].includes(`${member.role}`);
+
+const isMemberProject = (project, member) =>
+  project && project.team.includes(member._id);
