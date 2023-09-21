@@ -1,7 +1,13 @@
 const { Schema, model } = require("mongoose");
 const Project = require("@project/Project");
+const Member = require("@member/Member")
 
 const NewsSchema = new Schema({
+    member: {
+        type: Schema.Types.ObjectId,
+        ref: Member,
+        required: true
+    },
     project: {
         type: Schema.Types.ObjectId,
         ref: Project,
@@ -11,7 +17,7 @@ const NewsSchema = new Schema({
         type: String,
         required: true
     },
-    images: {
+    image: {
         type: Buffer,
         required: false 
     },
