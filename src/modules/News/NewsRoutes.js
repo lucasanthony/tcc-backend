@@ -9,7 +9,7 @@ const {
 
 router.post("/news", authorizedLeadership || authorizedMemberOnProject, save);
 router.get("/news", validatedUser, findByEj);
-router.patch("/news/:id", authorizedUser || authorizedMemberOnProject, update);
-router.delete("/news/:id", authorizedLeadership || authorizedMemberOnProject, remove);
+router.patch("/news/:id-project", authorizedUser || authorizedMemberOnProject, update);
+router.delete("/news/:id-project", authorizedLeadership || authorizedMemberOnProject, remove);
 
 module.exports = router;
