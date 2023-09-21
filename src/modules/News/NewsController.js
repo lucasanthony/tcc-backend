@@ -1,4 +1,4 @@
-const { save, remove } = require("./NewsService");
+const { save, findByProject, remove, update } = require("./NewsService");
 
 module.exports = {
     async save(req, res) {
@@ -21,7 +21,7 @@ module.exports = {
 
     async remove(req, res) {
         try {
-            const removedNews = await remove(req.params.news-id);
+            const removedNews = await remove(req.body.newsId, req.params.project-id);
             return res.status(200).send({ news: removedNews, message: "Atualização do projeto removida com sucesso!" });
         } catch (error) {
             return res.status(500).send({ error: error.message });
@@ -30,7 +30,7 @@ module.exports = {
 
     async update(req, res) {
         try {
-            const updatedNews = await update(req.params.project-id, req.body);
+            const updatedNews = await update(req.params.news-id, req.body);
             return res.status(200).send({ news: updatedNews, message: 'Atualização do projeto editada com sucesso!' });
         } catch (error) {
             return res.status(500).send({ error: error.message });
