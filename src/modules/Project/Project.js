@@ -1,6 +1,7 @@
-const { Schema, model } = require('mongoose');
-const Ej = require('@ej/Ej')
-const Member = require('@member/Member')
+const { Schema, model } = require("mongoose");
+const Ej = require("@ej/Ej");
+const Member = require("@member/Member");
+const News = require("@news/News");
 
 const ProjectSchema = new Schema({
 	name: {
@@ -13,7 +14,7 @@ const ProjectSchema = new Schema({
 	},
 	tags: [{
 		type: String,
-		enum: ['Backend', 'Frontend', 'Mobile', 'Wordpress', 'Assessoria', 'Treinamento'],
+		enum: ["Backend", "Frontend", "Mobile", "Wordpress", "Assessoria", "Treinamento"],
 		required: false
 	}],
 	ej: {
@@ -52,9 +53,15 @@ const ProjectSchema = new Schema({
 			required: false
 		}
 	},
+	news: [{
+		type: Schema.Types.ObjectId,
+		ref: News,
+		required: false,
+		default: []
+	}]
 },
 	{
 		timestamps: true,
 	});
 
-module.exports = model('Project', ProjectSchema);
+module.exports = model("Project", ProjectSchema);
