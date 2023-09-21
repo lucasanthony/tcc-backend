@@ -59,7 +59,7 @@ const authorize = (req, res, next, type) => {
         break;
 
       case "team":
-        const project = await Project.findOne({ _id: req.body.id-project});
+        const project = await Project.findOne({ _id: req.body.id});
         if(!isMemberProject(project, member))
           return res.status(403).send({ error: "Usuário sem permissão." });
         break
