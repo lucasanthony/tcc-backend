@@ -19,7 +19,8 @@ module.exports = {
         return getDTOnews(news);
     },
 
-    async remove(newsId) {
+    async remove(newsId, projectId) {
+        await Project.update({ _id: projectId }, { $pull: { news: newsId } })
         const news = await News.deleteOne({ _id: newsId });
         return getDTOnews(news);
     },
