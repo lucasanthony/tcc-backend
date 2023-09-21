@@ -15,7 +15,12 @@ module.exports = {
     async remove(newsId) {
         const news = await News.deleteOne({ _id: newsId });
         return getDTOnews(news);
-    }
+    },
+
+    async update(newstId, data) {
+		const updatedNews = await News.findOneAndUpdate({ _id: newstId }, data)
+		return getDTOnews(updatedNews);
+	}
 }
 
 function getDTOnews(news) {
