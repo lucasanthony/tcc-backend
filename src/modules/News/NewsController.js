@@ -22,7 +22,7 @@ module.exports = {
     async update(req, res) {
         try {
             const updatedNews = await update(req.params.id, req.body);
-            return res.status(200).send({ news: updatedNews, message: 'Atualização do projeto adicionada com sucesso!' });
+            return res.status(200).send({ news: updatedNews, message: 'Atualização do projeto editada com sucesso!' });
         } catch (error) {
             return res.status(500).send({ error: error.message });
         }
