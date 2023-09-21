@@ -7,9 +7,9 @@ const {
   authorizedMemberOnProject,
 } = require("@middlewares/auth");
 
-router.post("/news", authorizedLeadership || authorizedMemberOnProject, save);
+router.post("/news/:project-id", authorizedLeadership || authorizedMemberOnProject, save);
 router.get("/news", validatedUser, findByEj);
 router.patch("/news/:id", authorizedUser || authorizedMemberOnProject, update);
-router.delete("/news/:id", authorizedLeadership || authorizedMemberOnProject, remove);
+router.delete("/news/:news-id", authorizedLeadership || authorizedMemberOnProject, remove);
 
 module.exports = router;
