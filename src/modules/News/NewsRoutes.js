@@ -8,8 +8,8 @@ const {
 } = require("@middlewares/auth");
 
 router.post("/news/:project-id", authorizedLeadership || authorizedMemberOnProject, save);
-router.get("/news", validatedUser, findByEj);
-router.patch("/news/:id", authorizedUser || authorizedMemberOnProject, update);
+router.get("/news/:project-id", validatedUser, findByProject);
+router.patch("/news/:project-id", authorizedUser || authorizedMemberOnProject, update);
 router.delete("/news/:news-id", authorizedLeadership || authorizedMemberOnProject, remove);
 
 module.exports = router;
