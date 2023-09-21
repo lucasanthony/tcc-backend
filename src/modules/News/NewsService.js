@@ -25,9 +25,15 @@ module.exports = {
     },
 
     async update(newstId, data) {
-		const updatedNews = await News.findOneAndUpdate({ _id: newstId }, data)
+        const { description, image, updateLink } = data;
+		const updatedNews = await News.findOneAndUpdate({ _id: newstId }, { description, image, updateLink });
 		return getDTOnews(updatedNews);
-	}
+	},
+}
+
+async function findByProject(projectId) {
+    const projectNews = News.findAll({ project: projectId });
+    return getDTOnews(projectNews);
 }
 
 function getDTOnews(news) {
