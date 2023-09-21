@@ -29,12 +29,13 @@ module.exports = {
 		const updatedNews = await News.findOneAndUpdate({ _id: newstId }, { description, image, updateLink });
 		return getDTOnews(updatedNews);
 	},
+    
+    async findByProject(projectId) {
+        const projectNews = News.findAll({ project: projectId });
+        return getDTOnews(projectNews);
+    }
 }
 
-async function findByProject(projectId) {
-    const projectNews = News.findAll({ project: projectId });
-    return getDTOnews(projectNews);
-}
 
 function getDTOnews(news) {
     return {
