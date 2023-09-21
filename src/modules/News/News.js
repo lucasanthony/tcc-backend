@@ -11,10 +11,10 @@ const NewsSchema = new Schema({
         type: String,
         required: true
     },
-    images: [{
-        type: String,
+    images: {
+        type: Buffer,
         required: false 
-    }],
+    },
     updateLink: [{
         type: String,
         required: false
