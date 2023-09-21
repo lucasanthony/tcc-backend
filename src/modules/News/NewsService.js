@@ -1,14 +1,21 @@
 const News = require("@news/News");
+const Project = require("@project/Project");
 
 module.exports = {
-    async save(newsData) {
-        const { description, images, updateLink } = newsData;
+    async save(newsData, projectId) {
+        const { description, image, updateLink } = newsData;
 
         const news = await News.create({
+            project: projectId,
+            member: memberId,
             description,
-            images,
+            image,
             updateLink
         })
+        const project = await Project.findOne({ _id: projectId });
+        const projectNews = project.news.push(news._id);
+        project.update({ news: projectNews });
+        
         return getDTOnews(news);
     },
 
