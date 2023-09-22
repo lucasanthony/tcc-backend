@@ -2,38 +2,49 @@ const News = require("@news/News");
 const Project = require("@project/Project");
 
 module.exports = {
-    async save(newsData, projectId) {
-        const { description, image, updateLink } = newsData;
+    async save(memberId, newsData, projectId) {
+      const { description, image, updateLink } = newsData;
 
-        const news = await News.create({
-            project: projectId,
-            member: memberId,
-            description,
-            image,
-            updateLink
-        })
-        const project = await Project.findOne({ _id: projectId });
-        const projectNews = project.news.push(news._id);
-        project.update({ news: projectNews });
-        
-        return getDTOnews(news);
+      const news = new News({
+         member: memberId,
+         project: projectId,
+         description,
+         image,
+         updateLink
+       });
+
+      await news.save();
+
+      await Project.updateOne({ _id: projectId }, { $push: { news: news._id } });
+      
+      return getDTOnews(news);
     },
 
-    async remove(newsId, projectId) {
-        await Project.update({ _id: projectId }, { $pull: { news: newsId } })
-        const news = await News.deleteOne({ _id: newsId });
-        return getDTOnews(news);
+    async findByProject(projectId) {
+      const project = await Project.findOne({ _id: projectId })
+
+      const news = await News.find({ _id: { $in: project.news } });
+
+      return news.map(element => getDTOnews(element));      
     },
 
     async update(newstId, data) {
-        const { description, image, updateLink } = data;
-		const updatedNews = await News.findOneAndUpdate({ _id: newstId }, { description, image, updateLink });
-		return getDTOnews(updatedNews);
+      const { description, image, updateLink } = data;
+
+		const updatedNews = await News.findOneAndUpdate({ _id: newstId }, { description, image, updateLink }, { new: true });
+		
+      return getDTOnews(updatedNews);
 	},
-    
-    async findByProject(projectId) {
-        const projectNews = News.findAll({ project: projectId });
-        return getDTOnews(projectNews);
+
+   async remove(projectId, data) {
+      const project = await Project.findOneAndUpdate({ _id: projectId }, { $pull: { news: data.newsId } }, { new: true })
+      
+      const news = await News.deleteOne({ _id: data.newsId });
+      
+      if (news.deletedCount > 0)
+         return project.news.map(element => getDTOnews(element));
+      else
+         throw new Error('Atualização não encontrada.');
     }
 }
 
@@ -41,8 +52,12 @@ module.exports = {
 function getDTOnews(news) {
     return {
         _id: news._id,
+        member: news.member,
+        project: news.project,
         description: news.description,
         images: news.images,
-        updateLink: news.updateLink
+        updateLink: news.updateLink,
+        createdAt: news.createdAt,
+        updatedAt: news.updatedAt
     }
 }
