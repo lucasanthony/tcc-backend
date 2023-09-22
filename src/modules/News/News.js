@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const Project = require("@project/Project");
 const Member = require("@member/Member")
 
 const NewsSchema = new Schema({
@@ -9,9 +8,9 @@ const NewsSchema = new Schema({
         required: true
     },
     project: {
-        type: Schema.Types.ObjectId,
-        ref: Project,
-        required: true
+      type: Schema.Types.ObjectId,
+      ref: 'Project',
+      required: true
     },
     description: {
         type: String,
@@ -21,10 +20,10 @@ const NewsSchema = new Schema({
         type: Buffer,
         required: false 
     },
-    updateLink: [{
+    updateLink: {
         type: String,
         required: false
-    }]
+    }
 },
     {
         timestamps: true,
