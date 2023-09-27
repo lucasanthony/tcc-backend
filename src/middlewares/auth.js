@@ -70,8 +70,8 @@ const authorize = (req, res, next, type) => {
         break;
 
       case "ownerOfNews":
-        const newsId = await News.findOne({_id: req.body.newsId});
-        if(!isLeadership(member) && !isOwnerOfNews(newsId, member))
+         const news = await News.findOne({_id: req.body.newsId});
+        if(!isLeadership(member) && !isOwnerOfNews(news, member))
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
     }
@@ -89,4 +89,4 @@ const isMemberProject = (project, member) =>
   project && project.team.includes(member._id);
 
 const isOwnerOfNews = (news, member) =>
-  member._id === news.member;
+   news.member.toString() === member._id.toString();
