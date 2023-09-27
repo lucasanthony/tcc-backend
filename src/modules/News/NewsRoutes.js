@@ -2,15 +2,13 @@ const router = require("express").Router();
 const { save, findByProject, update, remove } = require("./NewsController");
 const {
   validatedUser,
-  authorizedUser,
-  authorizedLeadership,
   authorizedMemberOnProject,
-  isOwnerOfNews,
+  authorizedMemberOnNews,
 } = require("@middlewares/auth");
 
-router.post("/news/:projectId", authorizedLeadership || authorizedMemberOnProject, save);
+router.post("/news/:projectId", authorizedMemberOnProject, save);
 router.get("/news/:projectId", validatedUser, findByProject);
-router.patch("/news/:newsId", authorizedUser || isOwnerOfNews, update);
-router.delete("/news/:projectId", authorizedLeadership || isOwnerOfNews, remove);
+router.patch("/news/:newsId", authorizedMemberOnNews, update);
+router.delete("/news/:projectId", authorizedMemberOnNews, remove);
 
 module.exports = router;

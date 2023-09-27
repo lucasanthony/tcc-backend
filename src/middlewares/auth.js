@@ -20,7 +20,7 @@ module.exports = {
     authorize(req, res, next, "team");
   },
 
-  authorizedOwnerOfNews(req, res, next){
+  authorizedMemberOnNews(req, res, next){
     authorize(req, res, next, "ownerOfNews");
   },
 
@@ -64,14 +64,14 @@ const authorize = (req, res, next, type) => {
         break;
 
       case "team":
-        const project = await Project.findOne({ _id: req.body.id});
-        if(!isMemberProject(project, member))
+        const project = await Project.findOne({ _id: req.params.projectId });
+        if(!isLeadership(member) && !isMemberProject(project, member))
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
 
       case "ownerOfNews":
         const newsId = await News.findOne({_id: req.body.newsId});
-        if(!isOwnerOfNews(newsId, member))
+        if(!isLeadership(member) && !isOwnerOfNews(newsId, member))
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
     }
