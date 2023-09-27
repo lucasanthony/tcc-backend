@@ -8,7 +8,7 @@ const {
 
 router.post("/news/:projectId", authorizedMemberOnProject, save);
 router.get("/news/:projectId", validatedUser, findByProject);
-router.patch("/news/:newsId", authorizedMemberOnNews, update);
+router.patch("/news", authorizedMemberOnNews, update);
 router.delete("/news/:projectId", authorizedMemberOnNews, remove);
 
 module.exports = router;
