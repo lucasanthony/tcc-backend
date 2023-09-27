@@ -54,12 +54,12 @@ module.exports = {
 	},
 
    async remove(projectId, data) {
-      await Project.findOneAndUpdate({ _id: projectId }, { $pull: { news: data.newsId } }, { new: true })
+      const project = await Project.findOneAndUpdate({ _id: projectId }, { $pull: { news: data.newsId } }, { new: true })
       
       const news = await News.deleteOne({ _id: data.newsId });
 
       if (news.deletedCount > 0) {
-         return await News.find({ project: news.project })
+         return await News.find({ _id: { $in: project.news } })
          .select('_id member project description images updateLink createdAt updatedAt')
          .populate('member', '_id name')
          .sort({_id:-1}) 
