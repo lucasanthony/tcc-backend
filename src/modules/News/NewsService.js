@@ -22,29 +22,51 @@ module.exports = {
 
     async findByProject(projectId) {
       const project = await Project.findOne({ _id: projectId })
+      .select('_id news name');
 
-      const news = await News.find({ _id: { $in: project.news } });
+      const news = await News.find({ _id: { $in: project.news } })
+      .select('_id member project description images updateLink createdAt updatedAt')
+      .populate('member', '_id name')
+      .sort({_id:-1}) 
+      .exec();
 
-      return news.map(element => getDTOnews(element));      
+      delete project.news
+
+      return { news: news, project: project };   
     },
 
     async update(newstId, data) {
-      const { description, image, updateLink } = data;
+      const { description, image, updateLink } = data.news;
 
-		const updatedNews = await News.findOneAndUpdate({ _id: newstId }, { description, image, updateLink }, { new: true });
+		const updatedNews = await News.findOneAndUpdate({ _id: newstId },
+         {
+            description: description,
+            image: image,
+            updateLink: updateLink
+         },
+         { new: true });
 		
-      return getDTOnews(updatedNews);
+      return await News.find({ project: updatedNews.project })
+         .select('_id member project description images updateLink createdAt updatedAt')
+         .populate('member', '_id name')
+         .sort({_id:-1}) 
+         .exec();
 	},
 
    async remove(projectId, data) {
-      const project = await Project.findOneAndUpdate({ _id: projectId }, { $pull: { news: data.newsId } }, { new: true })
+      await Project.findOneAndUpdate({ _id: projectId }, { $pull: { news: data.newsId } }, { new: true })
       
       const news = await News.deleteOne({ _id: data.newsId });
-      
-      if (news.deletedCount > 0)
-         return project.news.map(element => getDTOnews(element));
-      else
+
+      if (news.deletedCount > 0) {
+         return await News.find({ project: news.project })
+         .select('_id member project description images updateLink createdAt updatedAt')
+         .populate('member', '_id name')
+         .sort({_id:-1}) 
+         .exec();
+      } else {
          throw new Error('Atualização não encontrada.');
+      }
     }
 }
 
