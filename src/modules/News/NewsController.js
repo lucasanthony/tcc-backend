@@ -12,8 +12,8 @@ module.exports = {
 
     async findByProject(req, res) {
         try {
-            const allNews = await findByProject(req.params.projectId);
-            return res.status(201).send({ news: allNews });
+            const newsAndProject = await findByProject(req.params.projectId);
+            return res.status(201).send(newsAndProject);
         } catch (error) {
             return res.status(500).send({ error: error.message });
         }
