@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Ej = require("@ej/Ej");
 const Member = require("@member/Member");
-const News = require("@news/News");
 
 const ProjectSchema = new Schema(
   {
