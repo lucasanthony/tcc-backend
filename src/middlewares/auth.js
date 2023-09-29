@@ -4,28 +4,24 @@ const Project = require("@project/Project");
 const News = require("../modules/News/News");
 
 module.exports = {
-  validatedUser(req, res, next) {
-    authorize(req, res, next, "valid");
+  existentUser(req, res, next) {
+    authorize(req, res, next, "existent");
   },
 
   authorizedUser(req, res, next) {
-    authorize(req, res, next, "user");
+    authorize(req, res, next, "authorized");
   },
 
-  authorizedLeadership(req, res, next) {
+  isLeadership(req, res, next) {
     authorize(req, res, next, "leadership");
   },
 
-  authorizedMemberOnProject(req, res, next){
+  isMemberOnProject(req, res, next){
     authorize(req, res, next, "team");
   },
 
-  authorizedMemberOnNews(req, res, next){
-    authorize(req, res, next, "ownerOfNews");
-  },
-
-  authorizePresident(req, res, next) {
-    next();
+  haveRightsToTheNews(req, res, next){
+    authorize(req, res, next, "newsOwner");
   },
 };
 
@@ -48,12 +44,12 @@ const authorize = (req, res, next, type) => {
     const member = await Member.findOne({ _id: decoded.sub });
 
     switch (type) {
-      case "valid":
+      case "existent":
         if (!member)
           return res.status(404).send({ error: "Usuário não existe." });
         break;
 
-      case "user":
+      case "authorized":
         if (!isLeadership(member) && member._id.toString() !== req.body._id)
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
@@ -69,9 +65,9 @@ const authorize = (req, res, next, type) => {
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
 
-      case "ownerOfNews":
+      case "newsOwner":
          const news = await News.findOne({_id: req.body.newsId});
-        if(!isLeadership(member) && !isOwnerOfNews(news, member))
+        if(!isLeadership(member) && !isNewsOwner(news, member))
           return res.status(403).send({ error: "Usuário sem permissão." });
         break;
     }
@@ -88,5 +84,5 @@ const isLeadership = (member) =>
 const isMemberProject = (project, member) =>
   project && project.team.includes(member._id);
 
-const isOwnerOfNews = (news, member) =>
+const isNewsOwner = (news, member) =>
    news.member.toString() === member._id.toString();
